@@ -1,0 +1,3 @@
+[console_scripts]
+ra1000 = ra1000_calculator.cli:main
+

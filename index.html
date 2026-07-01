@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RA1000 Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 12L22 2L12 22L10 14L2 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1>RA1000 Calculator</h1>
+            </div>
+            <p class="subtitle">Compute exact 1,000 ft Radio Altitude crossing points.</p>
+        </header>
+
+        <main>
+            <div class="search-section">
+                <form id="search-form" class="search-box">
+                    <input type="text" id="icao-input" placeholder="Enter ICAO Code (e.g., LFML)" required autocomplete="off" spellcheck="false" maxlength="4">
+                    <button type="submit" id="search-btn">
+                        <span>Calculate</span>
+                        <div class="spinner" id="btn-spinner" style="display: none;"></div>
+                    </button>
+                </form>
+            </div>
+
+            <div id="loading-state" class="state-container hidden">
+                <div class="radar-spinner"></div>
+                <p>Generating approach profiles and fetching terrain data...</p>
+                <p class="sub-loading">This may take a few seconds.</p>
+            </div>
+
+            <div id="error-state" class="state-container hidden">
+                <div class="error-icon">⚠️</div>
+                <p id="error-message">Error fetching data.</p>
+            </div>
+
+            <div id="results-container" class="results-grid hidden">
+                <!-- Cards will be injected here -->
+            </div>
+        </main>
+        
+        <footer>
+            <p>Powered by Open-Meteo & OurAirports Data</p>
+        </footer>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="calculator.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
