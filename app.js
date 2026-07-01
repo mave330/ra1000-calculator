@@ -179,6 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function renderResults(results) {
+        const resultsTbody = document.getElementById("results-tbody");
+        
         if (!results || results.length === 0) {
             errorMessage.textContent = "No runways found for this airport.";
             errorState.classList.remove("hidden");
@@ -188,55 +190,32 @@ document.addEventListener("DOMContentLoaded", () => {
         resultsContainer.classList.remove("hidden");
 
         results.forEach(res => {
-            const card = document.createElement("div");
-            card.className = "card";
+            const tr = document.createElement("tr");
 
             const statusClass = getStatusClass(res.ra1000_status);
             
-            let dataContent = "";
-            if (res.ra1000_status === "OK") {
-                const dist = parseFloat(res.distance_nm_at_ra1000).toFixed(3);
-                const lat = parseFloat(res.lat_at_ra1000).toFixed(6);
-                const lon = parseFloat(res.lon_at_ra1000).toFixed(6);
-                const elev = parseFloat(res.terrain_elevation_ft_at_ra1000).toFixed(1);
-                const delta = parseFloat(res.delta_threshold_minus_terrain_at_ra1000_ft).toFixed(1);
+            let distStr = "—";
+            let coordStr = "—";
+            let elevStr = "—";
+            let deltaStr = "—";
 
-                dataContent = `
-                    <div class="data-row">
-                        <span class="data-label">Distance to RA 1000</span>
-                        <span class="data-value accent-value">${dist} NM</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Coordinates</span>
-                        <span class="data-value">${lat}, ${lon}</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Terrain Elev.</span>
-                        <span class="data-value">${elev} ft</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Delta (Threshold - Terrain)</span>
-                        <span class="data-value">${delta} ft</span>
-                    </div>
-                `;
-            } else {
-                dataContent = `
-                    <div class="data-row" style="flex-direction: column; align-items: flex-start; gap: 0.5rem;">
-                        <span class="data-label">Details</span>
-                        <span class="data-value" style="font-size: 0.9rem; color: var(--text-muted);">${res.ra1000_status}</span>
-                    </div>
-                `;
+            if (res.ra1000_status === "OK") {
+                distStr = `<span class="table-value accent-value">${parseFloat(res.distance_nm_at_ra1000).toFixed(3)} NM</span>`;
+                coordStr = `<span class="table-value">${parseFloat(res.lat_at_ra1000).toFixed(6)}, ${parseFloat(res.lon_at_ra1000).toFixed(6)}</span>`;
+                elevStr = `<span class="table-value">${parseFloat(res.terrain_elevation_ft_at_ra1000).toFixed(1)} ft</span>`;
+                deltaStr = `<span class="table-value">${parseFloat(res.delta_threshold_minus_terrain_at_ra1000_ft).toFixed(1)} ft</span>`;
             }
 
-            card.innerHTML = `
-                <div class="card-header">
-                    <span class="runway-id">${res.runway}</span>
-                    <span class="status-badge ${statusClass}">${res.ra1000_status}</span>
-                </div>
-                ${dataContent}
+            tr.innerHTML = `
+                <td><span class="runway-id">${res.runway}</span></td>
+                <td><span class="status-badge ${statusClass}">${res.ra1000_status}</span></td>
+                <td>${distStr}</td>
+                <td>${coordStr}</td>
+                <td>${elevStr}</td>
+                <td>${deltaStr}</td>
             `;
             
-            resultsContainer.appendChild(card);
+            resultsTbody.appendChild(tr);
         });
     }
 

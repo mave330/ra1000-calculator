@@ -173,41 +173,50 @@ h1 {
     font-size: 0.9rem;
 }
 
-/* Results Grid */
-.results-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
-
-.card {
+/* Results Table */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: 16px;
-    padding: 1.5rem;
+    overflow: hidden;
     backdrop-filter: blur(12px);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
+.results-table th, .results-table td {
+    padding: 1rem 1.5rem;
+    text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.results-table th {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.results-table tr:last-child td {
+    border-bottom: none;
+}
+
+.results-table tr {
+    transition: background-color 0.2s ease;
+}
+
+.results-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
 .runway-id {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #fff;
+    white-space: nowrap;
 }
 
 .status-badge {
@@ -216,29 +225,19 @@ h1 {
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
+    display: inline-block;
+    white-space: nowrap;
 }
 
 .status-ok { background: rgba(16, 185, 129, 0.1); color: var(--success); }
 .status-error { background: rgba(239, 68, 68, 0.1); color: var(--error); }
 .status-warning { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
 
-.data-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.75rem;
-    align-items: center;
-}
-
-.data-label {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-.data-value {
+.table-value {
     font-family: monospace;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #fff;
+    white-space: nowrap;
 }
 
 .accent-value {

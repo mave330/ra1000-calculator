@@ -42,8 +42,22 @@
                 <p id="error-message">Error fetching data.</p>
             </div>
 
-            <div id="results-container" class="results-grid hidden">
-                <!-- Cards will be injected here -->
+            <div id="results-container" class="hidden" style="width: 100%; overflow-x: auto;">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Runway</th>
+                            <th>Status</th>
+                            <th>Distance</th>
+                            <th>Coordinates (Lat, Lon)</th>
+                            <th>Terrain Elev.</th>
+                            <th>Delta (Thres - Terr)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-tbody">
+                        <!-- Rows will be injected here -->
+                    </tbody>
+                </table>
             </div>
         </main>
         
