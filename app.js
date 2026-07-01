@@ -141,8 +141,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const resp = await fetch(`https://api.open-meteo.com/v1/elevation?latitude=${latitudes}&longitude=${longitudes}`);
                 if (!resp.ok) {
-                    elevations_m.push(...Array(batch.length).fill(null));
-                    continue;
+                    if (resp.status === 429) {
+                        throw new Error("Open-Meteo API Rate Limit Exceeded. Please wait a minute and try again.");
+                    }
+                    throw new Error(`Open-Meteo API Error: ${resp.status}`);
                 }
                 const data = await resp.json();
                 if (data.elevation) {
@@ -151,8 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     elevations_m.push(...Array(batch.length).fill(null));
                 }
 
-                // Small delay to respect rate limit roughly
-                await new Promise(r => setTimeout(r, 100));
+                // Increased delay to respect rate limit more safely
+                await new Promise(r => setTimeout(r, 250));
             }
 
             // Assign elevations in ft

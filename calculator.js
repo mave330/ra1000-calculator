@@ -53,8 +53,13 @@ function findRaCrossings(runwayConfigs, samples, targetRaFt) {
 
         // Calculate terrain AAE and radio altitude for each point
         prof.forEach(p => {
-            p.terrain_aae_ft = p.terrain_elevation_ft - p.operational_threshold_elevation_ft;
-            p.radio_altitude_ft = p.aircraft_aae_ft - p.terrain_aae_ft;
+            if (p.terrain_elevation_ft === null || p.terrain_elevation_ft === undefined) {
+                p.terrain_aae_ft = null;
+                p.radio_altitude_ft = null;
+            } else {
+                p.terrain_aae_ft = p.terrain_elevation_ft - p.operational_threshold_elevation_ft;
+                p.radio_altitude_ft = p.aircraft_aae_ft - p.terrain_aae_ft;
+            }
         });
 
         let crossingFound = false;
