@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ra1000-calculator"
+version = "0.1.0"
+description = "Calculates the exact geographic point an aircraft reaches 1000ft Radio Altitude on approach."
+authors = [{ name = "Xavier M" }]
+dependencies = [
+    "pandas",
+    "requests",
+    "openpyxl"
+]
+requires-python = ">=3.7"
