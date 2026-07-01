@@ -200,6 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const lat = parseFloat(res.lat_at_ra1000).toFixed(6);
                 const lon = parseFloat(res.lon_at_ra1000).toFixed(6);
                 const elev = parseFloat(res.terrain_elevation_ft_at_ra1000).toFixed(1);
+                const delta = parseFloat(res.delta_threshold_minus_terrain_at_ra1000_ft).toFixed(1);
 
                 dataContent = `
                     <div class="data-row">
@@ -213,6 +214,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="data-row">
                         <span class="data-label">Terrain Elev.</span>
                         <span class="data-value">${elev} ft</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Delta (Threshold - Terrain)</span>
+                        <span class="data-value">${delta} ft</span>
                     </div>
                 `;
             } else {

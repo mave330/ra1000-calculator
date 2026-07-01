@@ -97,6 +97,7 @@ def find_ra_crossings(df_original, df_samples, target_ra_ft):
                 results.at[row_index, "aircraft_aae_ft_at_ra1000"] = ac_aae_interp
                 results.at[row_index, "terrain_aae_ft_at_ra1000"] = terrain_aae_interp
                 results.at[row_index, "terrain_elevation_ft_at_ra1000"] = terrain_elev_interp
+                results.at[row_index, "delta_threshold_minus_terrain_at_ra1000_ft"] = p1["operational_threshold_elevation_ft"] - terrain_elev_interp
                 results.at[row_index, "radio_altitude_ft_check"] = (ac_aae_interp - terrain_aae_interp)
                 results.at[row_index, "glide_angle_deg_used"] = p1["glide_angle_deg"]
                 results.at[row_index, "tch_ft_used"] = p1["tch_ft"]

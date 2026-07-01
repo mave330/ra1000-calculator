@@ -95,6 +95,7 @@ function findRaCrossings(runwayConfigs, samples, targetRaFt) {
                 res.lat_at_ra1000 = projected.lat;
                 res.lon_at_ra1000 = projected.lon;
                 res.terrain_elevation_ft_at_ra1000 = terrainElevInterp;
+                res.delta_threshold_minus_terrain_at_ra1000_ft = p1.operational_threshold_elevation_ft - terrainElevInterp;
                 
                 crossingFound = true;
                 break;
