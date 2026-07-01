@@ -132,30 +132,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // 5. Fetch Open-Meteo elevation data
-            const elevations_m = [];
-            for (let i = 0; i < samples.length; i += 100) {
-                const batch = samples.slice(i, i + 100);
-                const latitudes = batch.map(s => s.lat.toFixed(5)).join(",");
-                const longitudes = batch.map(s => s.lon.toFixed(5)).join(",");
-                
-                const resp = await fetch(`https://api.open-meteo.com/v1/elevation?latitude=${latitudes}&longitude=${longitudes}`);
-                if (!resp.ok) {
-                    if (resp.status === 429) {
-                        throw new Error("Open-Meteo API Rate Limit Exceeded. Please wait a minute and try again.");
-                    }
-                    throw new Error(`Open-Meteo API Error: ${resp.status}`);
-                }
-                const data = await resp.json();
-                if (data.elevation) {
-                    elevations_m.push(...data.elevation);
-                } else {
-                    elevations_m.push(...Array(batch.length).fill(null));
-                }
+            // 5. Fetch Open-Elevation data in a single POST request
+            const locations = samples.map(s => ({
+                latitude: parseFloat(s.lat.toFixed(5)),
+                longitude: parseFloat(s.lon.toFixed(5))
+            }));
 
-                // Increased delay to respect rate limit more safely
-                await new Promise(r => setTimeout(r, 250));
+            const oeResp = await fetch("https://api.open-elevation.com/api/v1/lookup", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ locations })
+            });
+
+            if (!oeResp.ok) {
+                throw new Error(`Open-Elevation API Error: ${oeResp.status}`);
             }
+
+            const oeData = await oeResp.json();
+            const elevations_m = oeData.results.map(r => r.elevation);
 
             // Assign elevations in ft
             for (let i = 0; i < samples.length; i++) {
