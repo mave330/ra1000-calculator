@@ -27,7 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
         loadingState.classList.remove("hidden");
         errorState.classList.add("hidden");
         resultsContainer.classList.add("hidden");
-        resultsContainer.innerHTML = "";
+
+        // Clear only the previous result rows.
+        // Do NOT clear resultsContainer.innerHTML, otherwise the <tbody id="results-tbody"> is deleted.
+        const previousResultsTbody = document.getElementById("results-tbody");
+        if (previousResultsTbody) {
+            previousResultsTbody.innerHTML = "";
+        }
 
         try {
             // 1. Fetch runways.csv if not cached
